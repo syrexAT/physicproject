@@ -163,6 +163,7 @@ public class PhysicsManager : MonoBehaviour
                         else if (a is RectangleBody && b is RectangleBody)
                         {
                             validCollision = CalculateCollisionData((RectangleBody)a, (RectangleBody)b, ref contactPoint, ref contactNormal, ref penetrationDepth);
+                            contactNormal = -contactNormal;
                         }
 
                         if (validCollision)
@@ -419,7 +420,7 @@ public class PhysicsManager : MonoBehaviour
                 Vector2 norm = new Vector2(axis.y, -axis.x);
                 for (int ii = 0; ii < collisionDatasB.Count; ii++)
                 {
-                    float depth = Vector2.Dot(-norm, collisionDatasB[ii].vertexPosition - verticesA[p0Index]);
+                    float depth = -Vector2.Dot(norm, collisionDatasB[ii].vertexPosition - verticesA[p0Index]);
                     if (depth <= 0) //liegt ausserhalb
                     {
                         collisionDatasB.RemoveAt(ii);
@@ -454,7 +455,7 @@ public class PhysicsManager : MonoBehaviour
                 Vector2 norm = new Vector2(axis.y, -axis.x);
                 for (int ii = 0; ii < collisionDatasA.Count; ii++)
                 {
-                    float depth = Vector2.Dot(norm, collisionDatasA[ii].vertexPosition - verticesB[p0Index]);
+                    float depth = -Vector2.Dot(norm, collisionDatasA[ii].vertexPosition - verticesB[p0Index]);
                     if (depth <= 0) //liegt ausserhalb
                     {
                         collisionDatasA.RemoveAt(ii);
@@ -496,7 +497,7 @@ public class PhysicsManager : MonoBehaviour
         {
             if (collisionData.penetrationDepth > penetrationDepth)
             {
-                penetrationDepth = -collisionData.penetrationDepth;
+                penetrationDepth = collisionData.penetrationDepth;
                 contactNormal = -collisionData.penetrationNormal; //pen normal negieren
                 contactPoint = collisionData.vertexPosition;
             }

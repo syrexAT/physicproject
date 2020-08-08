@@ -1,0 +1,12 @@
+[X] Kinematic
+[] Trigger (Alles in eine seperate liste, die bekommen alle keine forces und geben callbacks zurück wenn sie mit was overlappen)
+[] Drag
+[] Gravity
+[] Convex Shape (Collision detection is das selbe wie bei rectangle zu rectangle, aber anstatt den 4 punkten, eine eigene definierte liste der punkte
+dazu braucht man nohc die mass calculation und moment of inertia
+selber algorithmus wie rectangle zu rectangle, geht auch für convex shapes
+einzig schwierige: mass, mass mittelpunkt, und moment of inertia ausrechnen)
+
+
+
+

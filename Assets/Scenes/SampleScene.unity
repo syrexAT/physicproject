@@ -121,50 +121,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &159492986
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 159492988}
-  - component: {fileID: 159492987}
-  m_Layer: 0
-  m_Name: PhysicsManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &159492987
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 159492986}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0198562326ce2944ca295c5d56023989, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  physicsBodies: []
---- !u!4 &159492988
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 159492986}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &169390031
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,6 +155,7 @@ MonoBehaviour:
   offset: {x: 0, y: 0}
   density: 1
   bounciness: 0.412
+  kinematic: 0
   friction: 0
   velocity: {x: 0, y: 0}
   angularVelocity: 0
@@ -331,14 +288,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ced6ef09e7f8e9b4b9665cd9ab58b26e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boundsMin: {x: -46.26, y: 36.09}
-  boundsMax: {x: -44.26, y: 38.09}
+  boundsMin: {x: -41.46, y: 36.09}
+  boundsMax: {x: -39.46, y: 38.09}
   offset: {x: 0, y: 0}
   density: 1
   bounciness: 0
+  kinematic: 0
   friction: 1
-  velocity: {x: -2, y: -4}
-  angularVelocity: 0
+  velocity: {x: 2, y: -4}
+  angularVelocity: 0.31
   mass: 0
   momentOfInertia: 0
   radius: 1
@@ -350,7 +308,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 523639520}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -45.26, y: 37.09, z: 0}
+  m_LocalPosition: {x: -40.46, y: 37.09, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -390,6 +348,7 @@ MonoBehaviour:
   offset: {x: 0, y: 0}
   density: 0
   bounciness: 0
+  kinematic: 0
   friction: 0
   velocity: {x: 0, y: 0}
   angularVelocity: 0
@@ -414,7 +373,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1372843291
 GameObject:
@@ -445,11 +404,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5397bf05c89a14146bf58a03a2b2c1ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boundsMin: {x: -59.752144, y: 26.083738}
-  boundsMax: {x: -55.287857, y: 29.496264}
+  boundsMin: {x: -41.972145, y: 41.18374}
+  boundsMax: {x: -37.50786, y: 44.59626}
   offset: {x: 0, y: 0}
   density: 1
   bounciness: 0
+  kinematic: 0
   friction: 0
   velocity: {x: 0, y: 0}
   angularVelocity: 1
@@ -464,11 +424,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1372843291}
   m_LocalRotation: {x: 0, y: 0, z: 0.2008214, w: 0.9796279}
-  m_LocalPosition: {x: -57.52, y: 27.79, z: -7.598745}
+  m_LocalPosition: {x: -39.74, y: 42.89, z: -7.598745}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 23.17}
 --- !u!1 &1511789845
 GameObject:
@@ -546,14 +506,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5397bf05c89a14146bf58a03a2b2c1ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boundsMin: {x: -41.03, y: 30.4}
-  boundsMax: {x: -21.33, y: 32.4}
+  boundsMin: {x: -41.03, y: 28.76}
+  boundsMax: {x: -21.33, y: 30.76}
   offset: {x: 0, y: 0}
   density: 1
   bounciness: 0
+  kinematic: 0
   friction: 1
   velocity: {x: 0, y: 0}
-  angularVelocity: 0.12
+  angularVelocity: 0
   mass: 0
   momentOfInertia: 0
   extent: {x: 9.85, y: 1}
@@ -565,11 +526,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2133773330}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -31.18, y: 31.4, z: -7.598745}
+  m_LocalPosition: {x: -31.18, y: 29.76, z: -7.598745}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2135867453
 GameObject:
@@ -605,6 +566,7 @@ MonoBehaviour:
   offset: {x: 0, y: 0}
   density: 1
   bounciness: 0
+  kinematic: 0
   friction: 1
   velocity: {x: 0, y: -4}
   angularVelocity: 0.18
@@ -623,5 +585,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -13,6 +13,7 @@ public class PhysicsBody : MonoBehaviour
     [Range(0,1)] //wenn sie größer ist als 1 dann wird aus dem nix energie erzeugt
     public float bounciness; //restitution
 
+    public bool kinematic = false;
 
     public float friction; //reibung
 
@@ -38,7 +39,7 @@ public class PhysicsBody : MonoBehaviour
         Vector2 delta = p - GetCenter(); //vom collisionspunkt zum center
         //entwede den normalisierten vektor um 90 grad drehen und multiplizieren mit der distanz zum punkt, aber die variante hier unten is effizienter
         //90 grad gegen den uhrzeiger drehen
-        return velocity + new Vector2(delta.y, -delta.x) * angularVelocity;
+        return velocity + new Vector2(-delta.y, delta.x) * angularVelocity;
     }
 
     public static Vector2 RotateVector2(Vector2 v, float degree)
@@ -69,6 +70,10 @@ public class PhysicsBody : MonoBehaviour
     private void Start()
     {
         //masse automatisch berechnen
+        if (kinematic)
+        {
+            density = 10000000000000000000000000000f;
+        }
         CalculateStaticParameters(); //zuerst die parameter statisch
     }
 
