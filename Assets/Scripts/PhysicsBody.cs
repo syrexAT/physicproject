@@ -14,6 +14,8 @@ public class PhysicsBody : MonoBehaviour
     public float bounciness; //restitution
 
     public bool kinematic = false;
+    public bool isTrigger = false;
+    public bool isTriggered = false;
 
     public float friction; //reibung
 
@@ -74,19 +76,36 @@ public class PhysicsBody : MonoBehaviour
         {
             density = 10000000000000000000000000000f;
         }
+        if (isTrigger)
+        {
+
+        }
         CalculateStaticParameters(); //zuerst die parameter statisch
     }
 
     private void OnEnable()
 	{
-		PhysicsManager.instance.physicsBodies.Add(this);
+	
+        //if (isTrigger)
+        //{
+        //    PhysicsManager.instance.physicsBodiesTrigger.Add(this);
+        //}
+
+        PhysicsManager.instance.physicsBodies.Add(this);
+
 	}
 
 	private void OnDisable()
 	{
 		if(PhysicsManager.hasValidInstance)
 		{
-			PhysicsManager.instance.physicsBodies.Remove(this);
+            //if (isTrigger)
+            //{
+            //    PhysicsManager.instance.physicsBodiesTrigger.Remove(this);
+            //}
+
+            PhysicsManager.instance.physicsBodies.Remove(this);
+           
 		}
 	}
 

@@ -29,6 +29,7 @@ public class PhysicsBodySphere : PhysicsBody
 
     }
 
+    [ExecuteInEditMode]
     protected override void OnDrawGizmos()
     {
         Gizmos.color = Color.green;

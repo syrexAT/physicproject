@@ -150,12 +150,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ced6ef09e7f8e9b4b9665cd9ab58b26e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boundsMin: {x: -49.58, y: 35.5}
-  boundsMax: {x: -47.58, y: 37.5}
+  boundsMin: {x: -46.04, y: 33.45}
+  boundsMax: {x: -44.04, y: 35.45}
   offset: {x: 0, y: 0}
   density: 1
   bounciness: 0.412
   kinematic: 0
+  isTrigger: 1
+  isTriggered: 0
   friction: 0
   velocity: {x: 0, y: 0}
   angularVelocity: 0
@@ -170,7 +172,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 169390031}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -48.58, y: 36.5, z: 0}
+  m_LocalPosition: {x: -45.04, y: 34.45, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -288,15 +290,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ced6ef09e7f8e9b4b9665cd9ab58b26e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boundsMin: {x: -41.46, y: 36.09}
-  boundsMax: {x: -39.46, y: 38.09}
+  boundsMin: {x: -34.66, y: 33.97}
+  boundsMax: {x: -32.66, y: 35.97}
   offset: {x: 0, y: 0}
   density: 1
   bounciness: 0
   kinematic: 0
+  isTrigger: 0
+  isTriggered: 0
   friction: 1
-  velocity: {x: 2, y: -4}
-  angularVelocity: 0.31
+  velocity: {x: 0, y: 0}
+  angularVelocity: 0
   mass: 0
   momentOfInertia: 0
   radius: 1
@@ -308,7 +312,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 523639520}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -40.46, y: 37.09, z: 0}
+  m_LocalPosition: {x: -33.66, y: 34.97, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -349,6 +353,8 @@ MonoBehaviour:
   density: 0
   bounciness: 0
   kinematic: 0
+  isTrigger: 0
+  isTriggered: 0
   friction: 0
   velocity: {x: 0, y: 0}
   angularVelocity: 0
@@ -410,6 +416,8 @@ MonoBehaviour:
   density: 1
   bounciness: 0
   kinematic: 0
+  isTrigger: 0
+  isTriggered: 0
   friction: 0
   velocity: {x: 0, y: 0}
   angularVelocity: 1
@@ -512,6 +520,8 @@ MonoBehaviour:
   density: 1
   bounciness: 0
   kinematic: 0
+  isTrigger: 0
+  isTriggered: 0
   friction: 1
   velocity: {x: 0, y: 0}
   angularVelocity: 0
@@ -567,8 +577,10 @@ MonoBehaviour:
   density: 1
   bounciness: 0
   kinematic: 0
+  isTrigger: 0
+  isTriggered: 0
   friction: 1
-  velocity: {x: 0, y: -4}
+  velocity: {x: -2, y: 0}
   angularVelocity: 0.18
   mass: 0
   momentOfInertia: 0
