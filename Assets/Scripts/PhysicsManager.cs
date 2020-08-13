@@ -172,7 +172,7 @@ public class PhysicsManager : MonoBehaviour
                         else if (a is RectangleBody && b is RectangleBody)
                         {
                             validCollision = CalculateCollisionData((RectangleBody)a, (RectangleBody)b, ref contactPoint, ref contactNormal, ref penetrationDepth);
-                            contactNormal = -contactNormal;
+                            //contactNormal = -contactNormal; //this glitches it out
                         }
 
                         if (validCollision && !a.isTrigger && !b.isTrigger)
@@ -545,7 +545,7 @@ public class PhysicsManager : MonoBehaviour
         public CollisionData(Vector2 vertexPosition)
         {
             this.vertexPosition = vertexPosition;
-            penetrationDepth = Mathf.NegativeInfinity;
+            penetrationDepth = Mathf.Infinity;
             penetrationNormal = Vector2.zero;
         }
     }
