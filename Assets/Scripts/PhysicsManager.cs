@@ -35,8 +35,8 @@ public class PhysicsManager : MonoBehaviour
     public List<PhysicsBody> physicsBodies = new List<PhysicsBody>(); //alle bodies mit isTrigger false
     public List<PhysicsBody> physicsBodiesTrigger = new List<PhysicsBody>(); //alle die isTrigger aktiviert haben sind hier
 
-    public float gravityConstant = 9.81f;
-    public Vector2 gravityVector = Vector2.down;
+    public float gravityScale = 5f;
+    private Vector2 gravityVector = Vector2.down.normalized;
 
 
 
@@ -71,17 +71,29 @@ public class PhysicsManager : MonoBehaviour
 
         //hier jedes objekt mit jedem anderen objekt 1 mal zusammen durchgehen
 
-        
+
 
         //Solver, Solve Velocities
         foreach (var body in physicsBodies)
         {
             Transform t = body.transform;
-            t.position += (Vector3)body.velocity * Time.fixedDeltaTime;
-            //t.position += (Vector3)body.velocity + (Vector3)gravityVector * gravityConstant * Time.fixedDeltaTime; //obvious problem: durch das +gravityVector, haben objekte wenn sie sich moven nach links und rechts eine extrem starke velocity
+
+            if (body.kinematic == true)
+            {
+                t.position += (Vector3)body.velocity * Time.fixedDeltaTime;
+            }
+            else
+            {
+                /* t.position += (Vector3)body.velocity + (Vector3)gravityVector * gravityConstant * Time.fixedDeltaTime; *///obvious problem: durch das +gravityVector, haben objekte wenn sie sich moven nach links und rechts eine extrem starke velocity
+                t.position += (Vector3)body.velocity * Time.fixedDeltaTime;
+                t.position += (Vector3)gravityVector.normalized * gravityScale * body.mass * Time.fixedDeltaTime; //body mass
+            }
+            //t.position += (Vector3)body.velocity * Time.fixedDeltaTime;
+            /*t.position += (Vector3)body.velocity + (Vector3)gravityVector * gravityConstant * Time.fixedDeltaTime;*/ //obvious problem: durch das +gravityVector, haben objekte wenn sie sich moven nach links und rechts eine extrem starke velocity
+
             t.RotateAround(body.GetCenter(), Vector3.forward, body.angularVelocity * Mathf.Rad2Deg * Time.fixedDeltaTime);
         }
-        
+
 
         //IST DAS SELBE WIE DIE FOREACH OBEN
         //for (int i = 0; i < physicsBodies.Count; i++)
@@ -127,7 +139,7 @@ public class PhysicsManager : MonoBehaviour
                         {
                             validCollision = CalculateCollisionData((PhysicsBodySphere)a, (PhysicsBodySphere)b, ref contactPoint, ref contactNormal, ref penetrationDepth);
 
-                           
+
                             //PhysicsBodySphere sphereA = (PhysicsBodySphere)a;
                             //PhysicsBodySphere sphereB = (PhysicsBodySphere)b;
 
@@ -265,7 +277,7 @@ public class PhysicsManager : MonoBehaviour
                             {
                                 a.isTriggered = true;
                                 Debug.Log("A is triggered");
-                                
+
                             }
                             else if (b.isTrigger)
                             {
@@ -324,7 +336,7 @@ public class PhysicsManager : MonoBehaviour
 
         //jetzt checken ob centerA (den sphere mittelpunkt) innerhalb von diesen inflatedExtents liegt, es kann aber immer noch in den ecken liegen!
         if (centerA.x <= inflatedExtents.x /*zumindest nicht rechts von der box*/ && centerA.x >= -inflatedExtents.x /*nicht links von der box*/ &&
-            centerA.y <=  inflatedExtents.y && centerA.y >= - inflatedExtents.y)
+            centerA.y <= inflatedExtents.y && centerA.y >= -inflatedExtents.y)
         {
             //Check ob wir in den ecken liegen
             //absolut wert von x und y
