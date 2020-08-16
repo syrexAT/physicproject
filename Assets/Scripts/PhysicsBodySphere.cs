@@ -9,6 +9,10 @@ public class PhysicsBodySphere : PhysicsBody
 
     public override void CalculateStaticParameters()
     {
+        //radius = 2f;
+        //bounciness = 1f;
+        //gravityScale = 0f;
+
         mass = radius * radius * Mathf.PI * density;
         momentOfInertia = mass * radius * radius / 2; //Formel steht in folie
     }
@@ -36,6 +40,45 @@ public class PhysicsBodySphere : PhysicsBody
         Vector2 rotatedOffset = RotateVector2(offset, transform.eulerAngles.z);
         Gizmos.DrawWireSphere(transform.position + (Vector3)rotatedOffset, radius);
 
+        UpdateSprite();
         base.OnDrawGizmos();
+    }
+
+    public void UpdateSprite()
+    {
+        if (GetComponentInChildren<SpriteRenderer>() != null)
+        {
+            GetComponentInChildren<SpriteRenderer>().size = new Vector2(radius / Mathf.PI, radius / Mathf.PI);
+        }
+        else
+        {
+            return;
+        }
+
+    }
+
+    public void AdjustRadius(float newRadius)
+    {
+        radius = newRadius;
+    }
+
+    public void AdjustBounciness(float newBounciness)
+    {
+        bounciness = newBounciness;
+    }
+
+    public void AdjustGravityScale(float newGravityScale)
+    {
+        gravityScale = newGravityScale;
+    }
+
+    public void AdjustFriction(float newFriction)
+    {
+        friction = newFriction;
+    }
+
+    public void AdjustDensity(float newDensity)
+    {
+        density = newDensity;
     }
 }

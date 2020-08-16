@@ -18,6 +18,7 @@ public class PhysicsBody : MonoBehaviour
     public bool isTriggered = false;
 
     public float friction; //reibung
+    public float gravityScale = 1f;
 
     //Runtime values
     public Vector2 velocity; //lineare velocity
@@ -26,6 +27,12 @@ public class PhysicsBody : MonoBehaviour
     public float mass; 
     public float momentOfInertia; //im 3d bräuchte man für alle 3 achsen ein eigenes MOI
     //bei primitives Masse mittelpunkt ist eh im zentrum, bei Convex nicht
+
+    public SpriteRenderer sr;
+    public bool colorChanged = false;
+    public float drag;
+
+    public Vector2 acceleration = new Vector2(0.1f, 0.1f);
 
     public float rotation
     {
@@ -69,19 +76,25 @@ public class PhysicsBody : MonoBehaviour
 
     }
 
+
+
     private void Start()
     {
         //masse automatisch berechnen
         if (kinematic)
         {
             density = 10000000000000000000000000000f;
+            gravityScale = 0;
         }
         if (isTrigger)
         {
-
+            gravityScale = 0;
         }
+
+        sr = GetComponentInChildren<SpriteRenderer>();
         CalculateStaticParameters(); //zuerst die parameter statisch
     }
+
 
     private void OnEnable()
 	{
@@ -108,6 +121,25 @@ public class PhysicsBody : MonoBehaviour
            
 		}
 	}
+
+    public void ChangeColorTrigger()
+    {
+        if (colorChanged == false)
+        {
+            //sr.color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+            sr.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+            colorChanged = true;
+        }
+    }
+
+    //private void Update()
+    //{
+    //    if (isTriggered && colorChanged == false)
+    //    {
+    //        sr.color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+    //        colorChanged = true;
+    //    }
+    //}
 
     protected virtual void OnDrawGizmos()
     {

@@ -13,6 +13,7 @@ public class RectangleBody : PhysicsBody
         mass = extent.x * extent.y * 4 * density; //* 4 weil a = 2x, b = 2y ; 2*x * 2*y = 4 *x *y
         //momentOfInertia = mass * extent.x * 2 * extent.x * 2
         momentOfInertia = mass * (extent.x * extent.x * 4 + extent.y * extent.y * 4) / 12; //Formel steht in folie), * 4 weil extents nur half sind
+        //UpdateSprite();
     }
 
     public override void UpdateBoundingBoxes()
@@ -57,7 +58,7 @@ public class RectangleBody : PhysicsBody
         //Gizmos.DrawLine(new Vector2(boundsMax.x, boundsMin.y), boundsMin);
         //Gizmos.DrawWireCube(transform.position + (Vector3)offset, extent * 2);
 
-
+        UpdateSprite();
         base.OnDrawGizmos();
     }
 
@@ -80,9 +81,13 @@ public class RectangleBody : PhysicsBody
         vertices[1] = center + corner1;
         vertices[2] = center - corner0;
         vertices[3] = center - corner1;
+    }
 
-
-
-
+    public void UpdateSprite()
+    {
+        if (GetComponentInChildren<SpriteRenderer>() != null)
+        {
+            GetComponentInChildren<SpriteRenderer>().size = new Vector2(extent.x * 2, extent.y * 2);
+        }
     }
 }

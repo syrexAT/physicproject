@@ -1,25 +1,36 @@
 [X] Kinematic (No gravity)
 [X] Trigger (Alles in eine seperate liste, die bekommen alle keine forces und geben callbacks zurück wenn sie mit was overlappen), keine liste aber jetzt mit isTrigger, und isTriggered wenns soweit is
-[] Drag
+[X] Drag
 [X] Gravity + gravityscale (wie sehr es von gravity beeinflusst wird) --> BRAUCHEN SLEEP THRESHOLD, weil er sonst durch kinemtic bodies durchrutscht
 [] Convex Shape (Collision detection is das selbe wie bei rectangle zu rectangle, aber anstatt den 4 punkten, eine eigene definierte liste der punkte
 dazu braucht man nohc die mass calculation und moment of inertia
 selber algorithmus wie rectangle zu rectangle, geht auch für convex shapes
 einzig schwierige: mass, mass mittelpunkt, und moment of inertia ausrechnen)
 [] Compund Collider --> massemittelpunkt anders berechnen siehe folie
+[] ANGULAR DRAG
 
 [] Aufziehen um Kugel zu schiessen
-[] Andere Szene wo es wie eine Waschmaschine ist
-[] UI Elemente einbauen um Radius bzw Extents zu ändern
-[] UI Element einbauen um Fricition zu ändern
-[] UI Element einbauen um Bounciness zu ändern
+[X] Andere Szene wo es wie eine Waschmaschine ist
+[X] UI Elemente einbauen um Radius bzw Extents zu ändern
+[X] UI Element einbauen um Fricition zu ändern
+[X] UI Element einbauen um Bounciness zu ändern
 [] UI Element einbauen um Trigger zu aktivieren/deaktivieren
 [] UI Element einbauen um Kinematic zu aktivieren/Deaktivieren
-[] UI Element einbauen um Density zu erhöhen
+[X] UI Element einbauen um Density zu erhöhen --> causing bugs
 [] UI Element einbauen um Offset einzugeben
 [] UI Element einbauen um Angular velocity anzugeben
-[] UI Element einbauen um Gravityscale zu ändern
+[X] UI Element einbauen um Gravityscale zu ändern
 [] UI Elemente einbauen für: Impulse, Toruque, Forces (die gehen aber nur wenn es nicht trigger ist)
+
+[X] Changing Rectangle sprite size runmtime
+[X] Changing Circle sprite size runtime
+[X] Changing Color when Trigger Rectangle and Circle
+
+bug:
+[X] Slider resetten sich, aber die value bleibt, die muss auch resettet werden
+
+Wenn man density hochstellt -> bzw. masse sich dann erhöht -> das caused das die bälle aus den borders rausfliegen, z.B. 180 density = 2300 masse, vs 1 density = 10 masse? 
+
 
 
 

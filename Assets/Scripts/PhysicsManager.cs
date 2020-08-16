@@ -35,7 +35,7 @@ public class PhysicsManager : MonoBehaviour
     public List<PhysicsBody> physicsBodies = new List<PhysicsBody>(); //alle bodies mit isTrigger false
     public List<PhysicsBody> physicsBodiesTrigger = new List<PhysicsBody>(); //alle die isTrigger aktiviert haben sind hier
 
-    public float gravityScale = 5f;
+    public float gravityConstant = -9.8f;
     private Vector2 gravityVector = Vector2.down.normalized;
 
 
@@ -77,19 +77,26 @@ public class PhysicsManager : MonoBehaviour
         foreach (var body in physicsBodies)
         {
             Transform t = body.transform;
+            SpriteRenderer sprite = body.GetComponentInChildren<SpriteRenderer>();
+            if (body.gravityScale > 0)
+            {
+                body.velocity.y += gravityConstant * body.gravityScale * Time.fixedDeltaTime;
+            }
+
+            body.velocity *= 1 - Time.fixedDeltaTime * body.drag;
+
+                /* t.position += (Vector3)body.velocity + (Vector3)gravityVector * gravityConstant * Time.fixedDeltaTime; *///obvious problem: durch das +gravityVector, haben objekte wenn sie sich moven nach links und rechts eine extrem starke velocity
+                t.position += (Vector3)body.velocity * Time.fixedDeltaTime;
+                /*t.position += (Vector3)gravityVector.normalized * (gravityConstant * body.gravityScale)* Time.fixedDeltaTime;*/ //body mass
+                //body.velocity *= 1 - Time.fixedDeltaTime * body.drag;
+            //t.position += (Vector3)body.velocity * Time.fixedDeltaTime;
+            /*t.position += (Vector3)body.velocity + (Vector3)gravityVector * gravityConstant * Time.fixedDeltaTime;*/ //obvious problem: durch das +gravityVector, haben objekte wenn sie sich moven nach links und rechts eine extrem starke velocity
 
             if (body.kinematic == true)
             {
                 t.position += (Vector3)body.velocity * Time.fixedDeltaTime;
             }
-            else
-            {
-                /* t.position += (Vector3)body.velocity + (Vector3)gravityVector * gravityConstant * Time.fixedDeltaTime; *///obvious problem: durch das +gravityVector, haben objekte wenn sie sich moven nach links und rechts eine extrem starke velocity
-                t.position += (Vector3)body.velocity * Time.fixedDeltaTime;
-                t.position += (Vector3)gravityVector.normalized * gravityScale * body.mass * Time.fixedDeltaTime; //body mass
-            }
-            //t.position += (Vector3)body.velocity * Time.fixedDeltaTime;
-            /*t.position += (Vector3)body.velocity + (Vector3)gravityVector * gravityConstant * Time.fixedDeltaTime;*/ //obvious problem: durch das +gravityVector, haben objekte wenn sie sich moven nach links und rechts eine extrem starke velocity
+            
 
             t.RotateAround(body.GetCenter(), Vector3.forward, body.angularVelocity * Mathf.Rad2Deg * Time.fixedDeltaTime);
         }
@@ -276,12 +283,13 @@ public class PhysicsManager : MonoBehaviour
                             if (a.isTrigger)
                             {
                                 a.isTriggered = true;
+                                b.ChangeColorTrigger();
                                 Debug.Log("A is triggered");
-
                             }
                             else if (b.isTrigger)
                             {
                                 b.isTriggered = true;
+                                a.ChangeColorTrigger();
                                 Debug.Log("B is triggered");
                             }
                         }
