@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PhysicsManager : MonoBehaviour
 {
@@ -32,12 +33,18 @@ public class PhysicsManager : MonoBehaviour
 
     public static float gravitationalConstant = 30f;
 
-    public List<PhysicsBody> physicsBodies = new List<PhysicsBody>(); //alle bodies mit isTrigger false
-    public List<PhysicsBody> physicsBodiesTrigger = new List<PhysicsBody>(); //alle die isTrigger aktiviert haben sind hier
+    public List<PhysicsBody> physicsBodies = new List<PhysicsBody>(); 
 
     public float gravityConstant = -9.8f;
     private Vector2 gravityVector = Vector2.down.normalized;
 
+    public GameObject positionReference;
+    public InputField[] inputFields;
+
+    private void Start()
+    {
+        positionReference = GameObject.Find("PositionReference");
+    }
 
 
     private void FixedUpdate()
@@ -84,9 +91,14 @@ public class PhysicsManager : MonoBehaviour
             }
 
             body.velocity *= 1 - Time.fixedDeltaTime * body.drag;
+            body.angularVelocity *= 1 - Time.fixedDeltaTime * body.angularDrag;
 
-                /* t.position += (Vector3)body.velocity + (Vector3)gravityVector * gravityConstant * Time.fixedDeltaTime; *///obvious problem: durch das +gravityVector, haben objekte wenn sie sich moven nach links und rechts eine extrem starke velocity
+            /* t.position += (Vector3)body.velocity + (Vector3)gravityVector * gravityConstant * Time.fixedDeltaTime; *///obvious problem: durch das +gravityVector, haben objekte wenn sie sich moven nach links und rechts eine extrem starke velocity
+            //if (body.velocity.x >= Mathf.Abs(0.01f) && body.velocity.y >= Mathf.Abs(0.01f))
+            //{
                 t.position += (Vector3)body.velocity * Time.fixedDeltaTime;
+            //}
+
                 /*t.position += (Vector3)gravityVector.normalized * (gravityConstant * body.gravityScale)* Time.fixedDeltaTime;*/ //body mass
                 //body.velocity *= 1 - Time.fixedDeltaTime * body.drag;
             //t.position += (Vector3)body.velocity * Time.fixedDeltaTime;
@@ -99,6 +111,40 @@ public class PhysicsManager : MonoBehaviour
             
 
             t.RotateAround(body.GetCenter(), Vector3.forward, body.angularVelocity * Mathf.Rad2Deg * Time.fixedDeltaTime);
+        }
+
+        foreach (var body in physicsBodies)
+        {
+            Transform t = body.transform;
+            if (body.isSelected)
+            {
+                if (Input.GetKeyDown(KeyCode.F))
+                {
+                    body.AddForce(new Vector2(5550, 5));
+                }
+                if (Input.GetKeyDown(KeyCode.J))
+                {
+                    body.AddImpulse(new Vector2(5, 0));
+                }
+                if (Input.GetKeyDown(KeyCode.T))
+                {
+                    body.AddTorque(5000);
+                }
+                if (Input.GetKeyDown(KeyCode.G))
+                {
+                    body.AddAngularImpulse(-500);
+                }
+                if (Input.GetKeyDown(KeyCode.L))
+                {
+                    body.AddForceAtPosition(new Vector2(0, -1500), body.transform.position + new Vector3(2, 2));
+                    Instantiate(positionReference, body.transform.position + new Vector3(2, 2), Quaternion.identity);
+                }
+                if (Input.GetKeyDown(KeyCode.I))
+                {
+                    body.AddImpulseAtPosition(new Vector2(0, -150), body.transform.position + new Vector3(2, 2));
+                    Instantiate(positionReference, body.transform.position + new Vector3(2, 2), Quaternion.identity);
+                }
+            }
         }
 
 
@@ -222,20 +268,19 @@ public class PhysicsManager : MonoBehaviour
                             //das selbe wie contactDeltaVelocity nur besser ? 
                             float projectedContactDeltaVelocity = Vector2.Dot(contactDeltaVelocity, contactNormal);
 
-
-                            //Abstand von Contact zum massemittelpunkt von A und B entlang der contactNormal
-                            //ProjectOnPlane --> Plane ist eine normal vektor, und der vektor der im Raum liegt und man den auf die Plane projeziert --> googeln
-                            //masse mittelpunkt zu contact point
-                            float normalDistanceA = Vector2.Dot(tangent, contactPoint - a.GetCenter());
-                            float normalDistanceB = Vector2.Dot(tangent, contactPoint - b.GetCenter());
-                            //float normalDistanceA = Vector3.ProjectOnPlane((contactPoint - a.GetCenter()), contactNormal).magnitude;
-                            //float normalDistanceB = Vector3.ProjectOnPlane((contactPoint - b.GetCenter()), contactNormal).magnitude;
-
-                            //(Kombinierter Impulserhaltungssatz)Impuls der rauskommt --> F= formel in der folie ; p ist linearer impuls (Folie)
-                            float p = projectedContactDeltaVelocity / ((1 / a.mass) + (1 / b.mass) + (normalDistanceA * normalDistanceA / a.momentOfInertia) + (normalDistanceB * normalDistanceB / b.momentOfInertia));
-
-                            if (p < 0) //sonst buggts bei der edge von einem rectangle z.B. mit einer sphere weil ein impuls ins objekt kommt
+                            if (projectedContactDeltaVelocity < 0) //sonst buggts bei der edge von einem rectangle z.B. mit einer sphere weil ein impuls ins objekt kommt
                             {
+                                //Abstand von Contact zum massemittelpunkt von A und B entlang der contactNormal
+                                //ProjectOnPlane --> Plane ist eine normal vektor, und der vektor der im Raum liegt und man den auf die Plane projeziert --> googeln
+                                //masse mittelpunkt zu contact point
+                                float normalDistanceA = Vector2.Dot(tangent, contactPoint - a.GetCenter());
+                                float normalDistanceB = Vector2.Dot(tangent, contactPoint - b.GetCenter());
+                                //float normalDistanceA = Vector3.ProjectOnPlane((contactPoint - a.GetCenter()), contactNormal).magnitude;
+                                //float normalDistanceB = Vector3.ProjectOnPlane((contactPoint - b.GetCenter()), contactNormal).magnitude;
+
+                                //(Kombinierter Impulserhaltungssatz)Impuls der rauskommt --> F= formel in der folie ; p ist linearer impuls (Folie)
+                                float p = projectedContactDeltaVelocity / ((1 / a.mass) + (1 / b.mass) + (normalDistanceA * normalDistanceA / a.momentOfInertia) + (normalDistanceB * normalDistanceB / b.momentOfInertia));
+
                                 float combinedBounciness = a.bounciness * b.bounciness;
 
 
@@ -248,45 +293,48 @@ public class PhysicsManager : MonoBehaviour
                                 //minus weil der drehimpuls ja umgekehrt gehört, weil etwas an der normal anstößt und sich dann in die richtung dreht, statt daran gezogen (an der normal)
                                 a.angularVelocity -= p * normalDistanceA / a.momentOfInertia;
                                 b.angularVelocity += p * normalDistanceB / b.momentOfInertia;
+
+                                //FRICTION
+                                float projectedContactDeltaVelocityFriction = Vector2.Dot(contactDeltaVelocity, tangent);
+                                float normalDistanceAFriction = Vector2.Dot(contactNormal, contactPoint - a.GetCenter());
+                                float normalDistanceBFriction = Vector2.Dot(contactNormal, contactPoint - b.GetCenter());
+
+                                float pFriction = projectedContactDeltaVelocityFriction / ((1 / a.mass) + (1 / b.mass) + (normalDistanceAFriction * normalDistanceAFriction / a.momentOfInertia) + (normalDistanceBFriction * normalDistanceBFriction / b.momentOfInertia));
+                                //pFriction *= (1 - combinedBounciness);
+
+
+                                float combinedFriction = a.friction * b.friction;
+                                //wieviel impuls kann dazu oder abgenommen werden abhängig von friction? maximal mögliche negierbar
+                                float pMaxFriction = Mathf.Abs(p * combinedFriction); //soviel kann maximal aufgenommen werden, absolut werte
+
+                                //Debug.Log("pFriction: " + pFriction);
+
+                                pFriction = Mathf.Clamp(pFriction, -pMaxFriction, pMaxFriction);
+
+                                a.velocity += tangent * pFriction / a.mass;
+                                b.velocity -= tangent * pFriction / b.mass;
+
+                                a.angularVelocity += pFriction * normalDistanceAFriction / a.momentOfInertia;
+                                b.angularVelocity -= pFriction * normalDistanceBFriction / b.momentOfInertia;
                             }
 
 
 
-                            //FRICTION
-                            float projectedContactDeltaVelocityFriction = Vector2.Dot(contactDeltaVelocity, tangent);
-                            float normalDistanceAFriction = Vector2.Dot(contactNormal, contactPoint - a.GetCenter());
-                            float normalDistanceBFriction = Vector2.Dot(contactNormal, contactPoint - b.GetCenter());
-
-                            float pFriction = projectedContactDeltaVelocityFriction / ((1 / a.mass) + (1 / b.mass) + (normalDistanceAFriction * normalDistanceAFriction / a.momentOfInertia) + (normalDistanceBFriction * normalDistanceBFriction / b.momentOfInertia));
-                            //pFriction *= (1 - combinedBounciness);
-
-
-                            float combinedFriction = a.friction * b.friction;
-                            //wieviel impuls kann dazu oder abgenommen werden abhängig von friction? maximal mögliche negierbar
-                            float pMaxFriction = Mathf.Abs(p * combinedFriction); //soviel kann maximal aufgenommen werden, absolut werte
-
-                            //Debug.Log("pFriction: " + pFriction);
-
-                            pFriction = Mathf.Clamp(pFriction, -pMaxFriction, pMaxFriction);
-
-                            a.velocity += tangent * pFriction / a.mass;
-                            b.velocity -= tangent * pFriction / b.mass;
-
-                            a.angularVelocity += pFriction * normalDistanceAFriction / a.momentOfInertia;
-                            b.angularVelocity -= pFriction * normalDistanceBFriction / b.momentOfInertia;
+                            
 
 
 
                         }
+                        //TRIGGER
                         if (validCollision && a.isTrigger || b.isTrigger)
                         {
-                            if (a.isTrigger)
+                            if (a.isTrigger && !b.isTrigger)
                             {
                                 a.isTriggered = true;
                                 b.ChangeColorTrigger();
                                 Debug.Log("A is triggered");
                             }
-                            else if (b.isTrigger)
+                            else if (b.isTrigger && !a.isTrigger)
                             {
                                 b.isTriggered = true;
                                 a.ChangeColorTrigger();
@@ -579,6 +627,17 @@ public class PhysicsManager : MonoBehaviour
         Vector2 norm = new Vector2(axis.y, axis.x);
         depth = Vector2.Dot(axis, point - p0);
         return depth < 0;
+    }
+
+    public void CheckforSelection()
+    {
+        foreach (var body in physicsBodies)
+        {
+            if (body.isSelected)
+            {
+                body.isSelected = false;
+            }
+        }
     }
 
 }

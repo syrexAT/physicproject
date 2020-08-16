@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 
 public class PhysicsBody : MonoBehaviour
@@ -31,6 +32,9 @@ public class PhysicsBody : MonoBehaviour
     public SpriteRenderer sr;
     public bool colorChanged = false;
     public float drag;
+    public float angularDrag;
+
+    public bool isSelected;
 
     public Vector2 acceleration = new Vector2(0.1f, 0.1f);
 
@@ -92,33 +96,20 @@ public class PhysicsBody : MonoBehaviour
         }
 
         sr = GetComponentInChildren<SpriteRenderer>();
-        CalculateStaticParameters(); //zuerst die parameter statisch
+        CalculateStaticParameters();
     }
 
 
     private void OnEnable()
 	{
-	
-        //if (isTrigger)
-        //{
-        //    PhysicsManager.instance.physicsBodiesTrigger.Add(this);
-        //}
-
         PhysicsManager.instance.physicsBodies.Add(this);
-
 	}
 
 	private void OnDisable()
 	{
 		if(PhysicsManager.hasValidInstance)
 		{
-            //if (isTrigger)
-            //{
-            //    PhysicsManager.instance.physicsBodiesTrigger.Remove(this);
-            //}
-
             PhysicsManager.instance.physicsBodies.Remove(this);
-           
 		}
 	}
 
@@ -211,5 +202,11 @@ public class PhysicsBody : MonoBehaviour
 
         angularVelocity += M / momentOfInertia;
     }
+
+    //public void OnPointerClick(PointerEventData eventData)
+    //{
+    //    Debug.Log(name + "GameObject clicked");
+    //}
+
 
 }

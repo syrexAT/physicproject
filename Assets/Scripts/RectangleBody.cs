@@ -90,4 +90,9 @@ public class RectangleBody : PhysicsBody
             GetComponentInChildren<SpriteRenderer>().size = new Vector2(extent.x * 2, extent.y * 2);
         }
     }
+
+    public void AdjustBounciness(float newBounciness)
+    {
+        bounciness = newBounciness;
+    }
 }

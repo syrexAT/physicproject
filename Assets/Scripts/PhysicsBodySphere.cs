@@ -7,6 +7,7 @@ public class PhysicsBodySphere : PhysicsBody
     //radius muss positiv sein
     public float radius;
 
+
     public override void CalculateStaticParameters()
     {
         //radius = 2f;
@@ -80,5 +81,20 @@ public class PhysicsBodySphere : PhysicsBody
     public void AdjustDensity(float newDensity)
     {
         density = newDensity;
+    }
+
+    public void AdjustDrag(float newDrag)
+    {
+        drag = newDrag;
+    }
+
+    public void AdjustAngularDrag(float newAngularDrag)
+    {
+        angularDrag = newAngularDrag;
+    }
+    
+    public void AdjustTriggerBool(bool newIsTrigger)
+    {
+        isTrigger = newIsTrigger;
     }
 }

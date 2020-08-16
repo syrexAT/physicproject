@@ -215,14 +215,16 @@ MonoBehaviour:
   kinematic: 0
   isTrigger: 0
   isTriggered: 0
-  friction: 1
-  gravityScale: 1.6427097
+  friction: 0
+  gravityScale: 0
   velocity: {x: 0, y: 0}
   angularVelocity: 0
   mass: 0
   momentOfInertia: 0
   sr: {fileID: 0}
   colorChanged: 0
-  drag: 1
+  drag: 0.2
+  angularDrag: 0
+  isSelected: 0
   acceleration: {x: 0.1, y: 0.1}
   radius: 2

@@ -18,6 +18,7 @@ public class Spawner : MonoBehaviour
     public float maxSpawnedCircles;
 
     public Slider[] sliders;
+    public float sliderDefaultValue; 
 
 
     public void SpawnCircle(Vector3 position)
@@ -38,6 +39,10 @@ public class Spawner : MonoBehaviour
     void Start()
     {
         pB = FindObjectOfType<PhysicsBody>();
+        foreach (var slider in sliders)
+        {
+            sliderDefaultValue = slider.value;
+        }
     }
 
     // Update is called once per frame
@@ -53,14 +58,14 @@ public class Spawner : MonoBehaviour
             spawnedCircles.Add(this.circle);
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            Vector3 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition, Camera.MonoOrStereoscopicEye.Mono);
+        //if (Input.GetKeyDown(KeyCode.Mouse1))
+        //{
+        //    Vector3 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition, Camera.MonoOrStereoscopicEye.Mono);
 
-            Vector3 adjustZ = new Vector3(worldPoint.x, worldPoint.y, circle.transform.position.z);
+        //    Vector3 adjustZ = new Vector3(worldPoint.x, worldPoint.y, circle.transform.position.z);
 
-            SpawnRectangle(adjustZ);
-        }
+        //    SpawnRectangle(adjustZ);
+        //}
     }
 
     public void ResetScene()
@@ -73,12 +78,8 @@ public class Spawner : MonoBehaviour
         foreach (var slider in sliders)
         {
             slider.value = 0;
+            //sliderDefaultValue = slider.value;
         }
         spawnedCircles.Clear();
-        //PhysicsBodySphere circlePB = circle.GetComponent<PhysicsBodySphere>();
-        //circlePB.radius = 2f;
-        //circlePB.gravityScale = 0f;
-        //circlePB.bounciness = 1f;
-        //circlePB.density = 1f;
     }
 }

@@ -7,18 +7,19 @@ dazu braucht man nohc die mass calculation und moment of inertia
 selber algorithmus wie rectangle zu rectangle, geht auch für convex shapes
 einzig schwierige: mass, mass mittelpunkt, und moment of inertia ausrechnen)
 [] Compund Collider --> massemittelpunkt anders berechnen siehe folie
-[] ANGULAR DRAG
+[X] ANGULAR DRAG
 
-[] Aufziehen um Kugel zu schiessen
+[X] Aufziehen um Kugel zu schiessen
+[X] Aufziehen um Rectangle zu schiessen/Spawnen
 [X] Andere Szene wo es wie eine Waschmaschine ist
 [X] UI Elemente einbauen um Radius bzw Extents zu ändern
 [X] UI Element einbauen um Fricition zu ändern
 [X] UI Element einbauen um Bounciness zu ändern
-[] UI Element einbauen um Trigger zu aktivieren/deaktivieren
+[X] UI Element einbauen um Trigger zu aktivieren/deaktivieren
 [] UI Element einbauen um Kinematic zu aktivieren/Deaktivieren
 [X] UI Element einbauen um Density zu erhöhen --> causing bugs
 [] UI Element einbauen um Offset einzugeben
-[] UI Element einbauen um Angular velocity anzugeben
+[X] UI Element einbauen um Angular velocity anzugeben
 [X] UI Element einbauen um Gravityscale zu ändern
 [] UI Elemente einbauen für: Impulse, Toruque, Forces (die gehen aber nur wenn es nicht trigger ist)
 
